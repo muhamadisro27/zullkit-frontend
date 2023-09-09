@@ -1,7 +1,8 @@
 <script setup>
 import Logo from "@/components/ui/Logo.vue";
 import NavLink from "@/components/ui/NavLink.vue";
-import Login from "@/components/ui/Login.vue";
+import Auth from "@/components/ui/Login.vue";
+import UserInfo from "@/components/ui/UserInfo.vue";
 </script>
 
 <template>
@@ -12,7 +13,8 @@ import Login from "@/components/ui/Login.vue";
       class="container flex flex-wrap items-center justify-between mx-auto my-2"
     >
       <Logo />
-      <Login />
+      <Auth />
+      <!-- <UserInfo /> -->
       <NavLink />
     </div>
   </nav>

@@ -1,5 +1,12 @@
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink, useRoute } from "vue-router";
+const route = useRoute();
+
+const setActive = (name) => {
+  if (route.name == name) {
+    return `text-indigo-500 font-semibold`;
+  }
+};
 </script>
 
 <template>
@@ -13,7 +20,8 @@ import { RouterLink } from 'vue-router';
       <li>
         <RouterLink
           to="/"
-          class="block py-2 pl-3 pr-4 text-white bg-indigo-600 rounded md:bg-transparent md:text-indigo-600 md:p-0 dark:text-white"
+          class="block py-2 pl-3 pr-4 text-white bg-indigo-600 rounded md:bg-transparent text-gray-700 md:p-0 dark:text-white"
+          :class="setActive('home')"
           aria-current="page"
           >Home</RouterLink
         >
@@ -22,6 +30,7 @@ import { RouterLink } from 'vue-router';
         <RouterLink
           to="/categories"
           class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+          :class="setActive('categories')"
           >Categories</RouterLink
         >
       </li>
@@ -29,6 +38,7 @@ import { RouterLink } from 'vue-router';
         <RouterLink
           to="/pricing"
           class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+          :class="setActive('pricing')"
           >Pricing</RouterLink
         >
       </li>
@@ -36,6 +46,7 @@ import { RouterLink } from 'vue-router';
         <RouterLink
           to="/study-case"
           class="block py-2 pl-3 pr-4 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-indigo-600 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
+          :class="setActive('study-case')"
           >Study Case</RouterLink
         >
       </li>

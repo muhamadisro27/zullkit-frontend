@@ -5,7 +5,9 @@ import PricingView from "../views/PricingView.vue";
 import LoginView from "../views/LoginView.vue";
 import StudyCaseView from "../views/StudyCaseView.vue";
 import RegisterView from "../views/RegisterView.vue";
-import DetailsView from "../views/DetailView.vue"
+import DetailsView from "../views/DetailView.vue";
+import CheckoutView from "../views/CheckoutView.vue";
+import SuccessView from "../views/SuccessView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,11 +46,20 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/product",
+      path: "/product/:id",
       name: "product",
       component: DetailsView,
     },
-    
+    {
+      path: "/checkout",
+      name: "checkout",
+      component: CheckoutView,
+    },
+    {
+      path: "/success",
+      name: "success",
+      component: SuccessView,
+    },
   ],
 });
 

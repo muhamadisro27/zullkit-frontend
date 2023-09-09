@@ -1,11 +1,11 @@
 <script setup>
-import { reactive, computed, ref } from "vue";
+import { ref } from "vue";
 
-const base_url = `src/assets/img/`;
+import icon_check from "@/assets/img/icon-check.png";
 
 const active = ref(0);
 
-const images = reactive([
+const images = ref([
   {
     src: "gallery-2.png",
   },
@@ -39,7 +39,7 @@ const setActive = (index) => {
           <section id="gallery">
             <template v-for="(image, index) in images">
               <img
-                :src="`${base_url}${image.src}`"
+                :src="'/src/assets/img/' + image.src"
                 alt=""
                 class="w-full mt-6 rounded-2xl"
                 v-if="active == index"
@@ -53,7 +53,7 @@ const setActive = (index) => {
                   :class="index == active ? 'ring-2 ring-indigo-500' : ''"
                 >
                   <img
-                    :src="`src/assets/img/${image.src}`"
+                    :src="'/src/assets/img/' + image.src"
                     class="w-full"
                     alt=""
                   />
@@ -88,7 +88,7 @@ const setActive = (index) => {
                 <div class="flex mb-2">
                   <div>
                     <img
-                      :src="`src/assets/img/icon-figma.png`"
+                      src="@/assets/img/icon-figma.png"
                       alt="figma icon"
                       class="w-16"
                     />
@@ -103,7 +103,7 @@ const setActive = (index) => {
                 <div class="flex mb-2">
                   <div>
                     <img
-                      :src="`src/assets/img/icon-sketch.png`"
+                      src="@/assets/img/icon-sketch.png"
                       alt="sketch icon"
                       class="w-16"
                     />
@@ -120,7 +120,7 @@ const setActive = (index) => {
                   <li class="mb-2">
                     Customizable layers
                     <img
-                      src="/src/assets/img/icon-check.png"
+                      :src="icon_check"
                       class="float-right w-5 mt-1"
                       alt=""
                     />
@@ -128,7 +128,7 @@ const setActive = (index) => {
                   <li class="mb-2">
                     Documentation
                     <img
-                      src="/src/assets/img/icon-check.png"
+                      :src="icon_check"
                       class="float-right w-5 mt-1"
                       alt=""
                     />
@@ -136,7 +136,7 @@ const setActive = (index) => {
                   <li class="mb-2">
                     Icon set design
                     <img
-                      src="/src/assets/img/icon-check.png"
+                      :src="icon_check"
                       class="float-right w-5 mt-1"
                       alt=""
                     />
@@ -144,19 +144,19 @@ const setActive = (index) => {
                   <li class="mb-2">
                     Pre-built UI screens
                     <img
-                      src="/src/assets/img/icon-check.png"
+                      :src="icon_check"
                       class="float-right w-5 mt-1"
                       alt=""
                     />
                   </li>
                 </ul>
               </div>
-              <a
-                href="checkout.html"
+              <RouterLink
+                to="/pricing"
                 class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-md md:px-10 hover:shadow"
               >
                 Download Now
-              </a>
+              </RouterLink>
             </div>
           </div>
         </aside>
