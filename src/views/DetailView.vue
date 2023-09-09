@@ -1,24 +1,36 @@
 <script setup>
 import { ref } from "vue";
-
+import { onMounted } from "vue";
+import axios from "axios";
 import icon_check from "@/assets/img/icon-check.png";
+import { useRoute } from "vue-router";
+
+const product = ref([]);
+const features = ref([])
+
+const router = useRoute();
+
+const getData = async () => {
+  await axios
+    .get(
+      "https://zullkit-backend.demo.belajarkoding.com/api/products?id=" +
+        router.params.id
+    )
+    .then((res) => {
+      if (res.status == 200) {
+        product.value = res.data.data;
+        features.value = product.value.features.split(",")
+        // features.value 
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
+onMounted(() => {
+  getData();
+});
 
 const active = ref(0);
-
-const images = ref([
-  {
-    src: "gallery-2.png",
-  },
-  {
-    src: "gallery-3.png",
-  },
-  {
-    src: "gallery-4.png",
-  },
-  {
-    src: "gallery-5.png",
-  },
-]);
 
 const setActive = (index) => {
   return (active.value = index);
@@ -33,58 +45,60 @@ const setActive = (index) => {
           <h1
             class="mb-2 text-3xl font-bold leading-normal tracking-tight text-gray-900 sm:text-4xl md:text-4xl"
           >
-            RoboCrypto UI Kit
+            {{ product.name }}
           </h1>
-          <p class="text-gray-500">Build your next coin startup</p>
+          <p class="text-gray-500">{{ product.subtitle }}</p>
           <section id="gallery">
-            <template v-for="(image, index) in images">
+            <template v-if="product">
+              <template v-for="(gallery, index) in product.galleries">
+                <img
+                  :src="gallery.url"
+                  alt=""
+                  class="w-full mt-6 rounded-2xl"
+                  v-if="active == index"
+                />
+              </template>
+            </template>
+            <template v-else>
               <img
-                :src="'/src/assets/img/' + image.src"
+                :src="product.thumbnails"
                 alt=""
                 class="w-full mt-6 rounded-2xl"
-                v-if="active == index"
               />
             </template>
             <div class="grid grid-cols-4 gap-4 mt-4">
-              <template v-for="(image, index) in images" :key="index">
+              <template
+                v-for="(gallery, index) in product.galleries"
+                :key="index"
+              >
                 <div
                   @mouseover="setActive(index)"
                   class="overflow-hidden cursor-pointer rounded-2xl"
                   :class="index == active ? 'ring-2 ring-indigo-500' : ''"
                 >
-                  <img
-                    :src="'/src/assets/img/' + image.src"
-                    class="w-full"
-                    alt=""
-                  />
+                  <img :src="gallery.url" class="w-full" alt="" />
                 </div>
               </template>
             </div>
           </section>
           <section class="" id="orders">
-            <h1 class="mt-8 mb-3 text-lg font-semibold">About</h1>
+            <h1 class="mb-3 text-lg font-semibold" :class="{ 'mt-8': product }">
+              About
+            </h1>
             <div class="text-gray-500">
               <p class="pb-4">
-                Sportly App UI Kit will help your Sport, Fitness, and Workout
-                App products or services. Came with modern and sporty style, you
-                can easily edit and customize all elements with components that
-                can speed up your design process.
+                {{ product.description }}
               </p>
-              <p class="pb-4">
-                Suitable for : <br />
-                - Sport App <br />
-                - Fitness & GYM App <br />
-                - Workout App <br />
-                - Trainer & Tracker App <br />
-                - And many more <br />
-              </p>
+              <!-- <p class="pb-4">
+                {{ product.features }}
+              </p> -->
             </div>
           </section>
         </main>
         <aside class="w-full px-4 sm:w-1/3 md:w-1/3">
           <div class="sticky top-0 w-full pt-4 md:mt-24">
             <div class="p-6 border rounded-2xl">
-              <div class="mb-4">
+              <div class="mb-4" v-if="product.is_figma >= 1">
                 <div class="flex mb-2">
                   <div>
                     <img
@@ -99,7 +113,7 @@ const setActive = (index) => {
                   </div>
                 </div>
               </div>
-              <div class="mb-4">
+              <div class="mb-4" v-if="product.is_sketch >= 1">
                 <div class="flex mb-2">
                   <div>
                     <img
@@ -117,32 +131,8 @@ const setActive = (index) => {
               <div>
                 <h1 class="mt-5 mb-3 font-semibold text-md">Great Features</h1>
                 <ul class="mb-6 text-gray-500">
-                  <li class="mb-2">
-                    Customizable layers
-                    <img
-                      :src="icon_check"
-                      class="float-right w-5 mt-1"
-                      alt=""
-                    />
-                  </li>
-                  <li class="mb-2">
-                    Documentation
-                    <img
-                      :src="icon_check"
-                      class="float-right w-5 mt-1"
-                      alt=""
-                    />
-                  </li>
-                  <li class="mb-2">
-                    Icon set design
-                    <img
-                      :src="icon_check"
-                      class="float-right w-5 mt-1"
-                      alt=""
-                    />
-                  </li>
-                  <li class="mb-2">
-                    Pre-built UI screens
+                  <li class="mb-2" v-for="(feature) in features">
+                    {{ feature }}
                     <img
                       :src="icon_check"
                       class="float-right w-5 mt-1"
