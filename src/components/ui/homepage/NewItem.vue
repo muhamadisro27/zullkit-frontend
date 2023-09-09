@@ -4,18 +4,21 @@ import CardItem from './CardItem.vue';
 
 const items = ref([
   {
+    id : 1,
     img: 'items-1.jpg',
     title : 'Mobile UI Kit',
     count : 'Mobile UI Kit',
     link : '#'
   },
   {
+    id : 2,
     img: 'items-2.jpg',
     title : 'Online Doctor Consultation',
     count : 'Website UI Kit',
     link : '#'
   },
   {
+    id : 3,
     img: 'items-3.jpg',
     title : 'Banking Crypto',
     count : 'Mobile UI Kit',
