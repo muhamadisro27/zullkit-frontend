@@ -48,6 +48,7 @@ const submit = async () => {
         placeholder="Type your password"
         id="password"
         type="password"
+        @keyup.enter="submit"
         name="password"
         v-model="form.password"
         class="block w-full py-3 mt-2 border border-gray-300 rounded-full shadow-sm px-7 focus:border-indigo-300 focus:outline-none focus:ring focus:ring-indigo-200 focus:ring-opacity-50 disabled:bg-gray-100"
