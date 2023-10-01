@@ -4,7 +4,7 @@ import { RouterLink } from "vue-router";
 
 defineProps({
   title: String,
-  url : String,
+  route_name : String,
   width: String,
   items: Array,
 });
@@ -15,7 +15,12 @@ defineProps({
     <h2 class="mb-4 text-xl font-medium md:mb-0 md:text-lg">{{ title }}</h2>
     <div class="flex flex-wrap -mx-1 lg:-mx-4">
       <Card :width="width" v-for="(item, index) in items" :key="index">
-        <RouterLink :to="`/${url}/${item.id}`">
+        <RouterLink :to="{
+          name : route_name,
+          params : {
+            id : item.id
+          }
+        }">
           <div class="m-4 overflow-hidden rounded-xl">
             <img
               :alt="item.name"

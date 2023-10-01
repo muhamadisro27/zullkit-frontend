@@ -1,5 +1,24 @@
+<script setup>
+import {ref} from 'vue';
+import CardItem from '@/components/ui/homepage/CardItem.vue';
+import {onMounted} from "vue";
+import axios from "axios";
+
+const categories = ref([])
+
+const getData = async () => {
+  await axios.get("https://zullkit-backend.demo.belajarkoding.com/api/categories").then((res) => {
+    if(res.status == 200) {
+      categories.value = res.data.data.data
+    }
+  }).catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  getData()
+});
+</script>
+
 <template>
-  <div class="categories">
-    <h1>This is a categories page</h1>
-  </div>
+    <CardItem route_name="categories" title="Top Categories" width="lg:w-1/4" :items="categories" id="categories" />
 </template>

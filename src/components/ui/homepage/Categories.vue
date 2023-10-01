@@ -20,5 +20,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <CardItem url="category" title="Top Categories" width="lg:w-1/4" :items="categories" id="categories" />
+  <CardItem route_name="categories" title="Top Categories" width="lg:w-1/4" :items="categories" id="categories" />
 </template>
