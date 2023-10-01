@@ -17,7 +17,7 @@ const getData = () => {
     .then((res) => {
       if (res.status == 200) {
         items.value = res.data.data.products;
-        category.value = res.data.data.name;
+        category.value = res.data.data;
       }
     })
     .catch((err) => console.log(err));
@@ -30,7 +30,7 @@ onMounted(() => {
 <template>
   <CardItem
     route_name="product"
-    :title="category"
+    :title="category.name"
     width="lg:w-1/3"
     :items="items"
   />
