@@ -28,7 +28,7 @@ const router = createRouter({
     },
     {
       path: "/categories/:id",
-      name: "categories",
+      name: "categories_id",
       component: CategoryDetailView,
     },
     {

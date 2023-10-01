@@ -8,6 +8,8 @@ import { useRoute } from "vue-router";
 const product = ref([]);
 const features = ref([])
 
+const galleries = ref([]);
+
 const router = useRoute();
 
 const getData = async () => {
@@ -20,7 +22,7 @@ const getData = async () => {
       if (res.status == 200) {
         product.value = res.data.data;
         features.value = product.value.features.split(",")
-        // features.value 
+        galleries.value = res.data.data.galleries
       }
     })
     .catch((err) => console.log(err));
@@ -49,8 +51,8 @@ const setActive = (index) => {
           </h1>
           <p class="text-gray-500">{{ product.subtitle }}</p>
           <section id="gallery">
-            <template v-if="product">
-              <template v-for="(gallery, index) in product.galleries">
+            <template v-if="galleries.length > 0">
+              <template v-for="(gallery, index) in galleries">
                 <img
                   :src="gallery.url"
                   alt=""
@@ -68,7 +70,7 @@ const setActive = (index) => {
             </template>
             <div class="grid grid-cols-4 gap-4 mt-4">
               <template
-                v-for="(gallery, index) in product.galleries"
+                v-for="(gallery, index) in galleries"
                 :key="index"
               >
                 <div

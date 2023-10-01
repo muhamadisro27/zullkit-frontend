@@ -34,7 +34,7 @@ defineProps({
               {{ item.name }}
             </h1>
             <span class="block text-sm font-light text-gray-500 no-underline">
-              {{ title == "Top Categories" ? item.products_count : "" }} {{ title == "Top Categories" ? "items" : "" }}
+              {{ title == "Top Categories" ? item.products_count : item.category ? item.category.name : '' }} {{ title == "Top Categories" ? "items" : "" }}
             </span>
           </header>
         </RouterLink>
