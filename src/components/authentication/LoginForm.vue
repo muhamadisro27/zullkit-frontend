@@ -1,11 +1,31 @@
 <script setup>
-import { reactive } from 'vue';
-import { RouterLink } from 'vue-router';
+import axios from "axios";
+import { reactive } from "vue";
+import { RouterLink } from "vue-router";
 
 const form = reactive({
-  email : '',
-  password : '',
-})
+  email: "",
+  password: "",
+});
+
+const submit = async () => {
+  try {
+    await axios
+      .post("https://zullkit-backend.demo.belajarkoding.com/api/login", {
+        email: form.email,
+        password: form.password,
+      })
+      .then((res) => {
+        localStorage.setItem('access_token', res.data.data.access_token);
+        localStorage.setItem('token_type', res.data.data.token_type);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  } catch (error) {
+    console.error("error" + error.message);
+  }
+};
 </script>
 
 <template>
@@ -35,6 +55,7 @@ const form = reactive({
     </div>
     <div class="mt-6">
       <button
+        @click.prevent="submit"
         type="submit"
         class="inline-flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-full hover:bg-indigo-700 md:py-2 md:text-lg md:px-10 hover:shadow"
       >
