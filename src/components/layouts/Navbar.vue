@@ -3,6 +3,19 @@ import Logo from "@/components/ui/Logo.vue";
 import NavLink from "@/components/ui/NavLink.vue";
 import Auth from "@/components/ui/Login.vue";
 import UserInfo from "@/components/ui/UserInfo.vue";
+import { useUserStore } from "@/stores/user";
+import { computed, onMounted } from "vue";
+
+
+const userStore = useUserStore();
+
+const isLoggedIn = computed(() => userStore.isLoggedIn);
+const user = computed(() => userStore.user);
+
+onMounted(() => {
+  userStore.fetchUser();
+})
+
 </script>
 
 <template>
@@ -13,8 +26,8 @@ import UserInfo from "@/components/ui/UserInfo.vue";
       class="container flex flex-wrap items-center justify-between mx-auto my-2"
     >
       <Logo />
-      <Auth />
-      <!-- <UserInfo /> -->
+      <UserInfo v-if="isLoggedIn" :user="user.data" />
+      <Auth v-else />
       <NavLink />
     </div>
   </nav>

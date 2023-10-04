@@ -1,7 +1,8 @@
 <script setup>
 import { reactive } from "vue";
 import axios from "axios";
-import { RouterLink } from "vue-router";
+import { useUserStore } from "@/stores/user";
+import { RouterLink, useRouter } from "vue-router";
 
 const form = reactive({
   name: "",
@@ -9,6 +10,9 @@ const form = reactive({
   password: "",
   title: "Designer",
 });
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const submit = async () => {
   try {
@@ -20,8 +24,13 @@ const submit = async () => {
         title: form.title,
       })
       .then((res) => {
-        localStorage.setItem("access_token", res.data.data.access_token);
-        localStorage.setItem("token_type", res.data.data.token_type);
+        if (res.data.meta.code == 200) {
+          localStorage.setItem("access_token", res.data.data.access_token);
+          localStorage.setItem("token_type", res.data.data.token_type);
+
+          userStore.fetchUser();
+          router.push("/")
+        }
       })
       .catch((err) => {
         console.error(err);

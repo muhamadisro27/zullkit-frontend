@@ -1,12 +1,16 @@
 <script setup>
+import { useUserStore } from "@/stores/user";
 import axios from "axios";
 import { reactive } from "vue";
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
 const form = reactive({
   email: "",
   password: "",
 });
+
+const router = useRouter();
+const userStore = useUserStore();
 
 const submit = async () => {
   try {
@@ -16,8 +20,13 @@ const submit = async () => {
         password: form.password,
       })
       .then((res) => {
-        localStorage.setItem('access_token', res.data.data.access_token);
-        localStorage.setItem('token_type', res.data.data.token_type);
+        if (res.data.meta.code == 200) {
+          localStorage.setItem("access_token", res.data.data.access_token);
+          localStorage.setItem("token_type", res.data.data.token_type);
+
+          userStore.fetchUser();
+          router.push("/")
+        }
       })
       .catch((err) => {
         console.error(err);
