@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createMemoryHistory, createRouter, createWebHistory, useRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import CategoryView from "../views/CategoryView.vue";
 import CategoryDetailView from "../views/CategoryDetailView.vue";
@@ -67,6 +67,14 @@ const router = createRouter({
       component: SuccessView,
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name == "login" && localStorage.hasOwnProperty('access_token')) {
+    next(from.path);
+  } else {
+    next();
+  }
 });
 
 export default router;
